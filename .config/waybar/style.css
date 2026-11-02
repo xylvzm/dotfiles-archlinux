@@ -1,0 +1,381 @@
+@define-color bg #000200;
+@define-color fg #e9d9b6;
+@define-color red #8c3936;
+@define-color khaki #ba9f64;
+@define-color yellow #b1b91b;
+@define-color blue #85a699;
+@define-color pink #a86585;
+@define-color lightgreen #a1ba97;
+@define-color orange #edbb26;
+@define-color green #6b9e67;
+@define-color teal #508780;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", monospace;
+    font-size: 12px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+window#waybar {
+    color: @fg;
+    background-color: transparent;
+    background-image: linear-gradient(@bg, @bg), linear-gradient(to right, @red, @khaki);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    border: 2px solid transparent;
+    border-radius: 11px;
+}
+.modules-left, .modules-right { margin: 4px 8px; }
+#custom-arch {
+    color: @fg;
+    background: @teal;
+    font-size: 20px;
+    padding: 0 9px;
+    border-radius: 4px 0 0 4px;
+    margin-right: -6px;
+}
+#workspaces {
+    background: @bg;
+    border: 2px solid @teal;
+    border-radius: 0 4px 4px 0;
+}
+#workspaces button {
+    padding: 0 9px;
+    color: @fg;
+    background: transparent;
+    border-radius: 2px;
+}
+#workspaces button.empty { color: @khaki; }
+#workspaces button.active, #workspaces button.active.empty { color: @bg; background: @blue; }
+#workspaces button:hover { color: @bg; background: @teal; }
+#custom-music { color: @green; padding: 0 3px; }
+#custom-cava {
+    color: @bg;
+    background: @green;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 0 7px;
+}
+#audio, #connection, #ram, #keyboard, #time {
+    background: @bg;
+    border: 2px solid;
+    border-radius: 5px;
+}
+#audio { border-color: @orange; color: @orange; }
+#connection { border-color: @lightgreen; color: @lightgreen; }
+#ram { border-color: @pink; color: @pink; }
+#keyboard { border-color: @blue; color: @blue; }
+#time { border-color: @yellow; color: @yellow; }
+#custom-audio-icon, #custom-network-icon, #custom-memory-icon,
+#custom-language-icon, #custom-clock-icon {
+    color: @bg;
+    padding: 0 7px;
+    border-radius: 2px 0 0 2px;
+}
+#custom-audio-icon { background: @orange; }
+#custom-network-icon { background: @lightgreen; }
+#custom-memory-icon { background: @pink; }
+#custom-language-icon { background: @blue; }
+#custom-clock-icon { background: @yellow; }
+#pulseaudio, #network, #memory, #language, #clock { padding: 0 7px; }
+#pulseaudio { color: @orange; }
+#network { color: @lightgreen; }
+#network.disconnected { color: @red; }
+#memory { color: @pink; }
+#language { color: @blue; }
+#clock { color: @yellow; }
+#custom-power { color: @fg; padding: 0 5px; }
+tooltip { background: @bg; border: 1px solid @khaki; border-radius: 6px; }
+tooltip label { color: @fg; padding: 6px; }
+
+/* Spacing and alignment refinement */
+#navigation {
+    background: @bg;
+    border: 2px solid @teal;
+    border-radius: 5px;
+    padding: 0;
+}
+
+#custom-arch {
+    margin: 0;
+    padding: 0 10px;
+    min-width: 20px;
+    font-size: 18px;
+    background: @teal;
+    border-radius: 2px 0 0 2px;
+}
+
+#workspaces {
+    border: none;
+    border-radius: 0 2px 2px 0;
+    margin: 0;
+    padding: 0;
+}
+
+#workspaces button {
+    min-width: 16px;
+    padding: 0 8px;
+}
+
+.modules-center {
+    margin: 4px 0;
+}
+
+#custom-music {
+    padding: 0 6px;
+}
+
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    min-width: 18px;
+    padding: 0 7px;
+    font-size: 12px;
+}
+
+#pulseaudio,
+#network,
+#memory,
+#language,
+#clock {
+    padding: 0 8px;
+}
+
+#custom-power {
+    padding: 0 8px;
+}
+
+/* Tan text and centered icon cells */
+#pulseaudio,
+#network,
+#memory,
+#language,
+#clock,
+#custom-music {
+    color: @fg;
+}
+
+#workspaces button.empty {
+    color: @fg;
+}
+#workspaces button.active.empty {
+    color: @bg;
+}
+
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    font-family: "JetBrainsMono Nerd Font Mono",
+                 "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    min-width: 28px;
+    padding: 0;
+    margin: 0;
+    color: @bg;
+}
+
+#custom-arch {
+    font-family: "JetBrainsMono Nerd Font Mono",
+                 "JetBrainsMono Nerd Font", monospace;
+    font-size: 19px;
+    min-width: 34px;
+    padding: 0;
+    margin: 0;
+    color: @fg;
+}
+
+/* Music stays green */
+#custom-music {
+    color: @green;
+}
+
+/* Full-size icons; retain centered alignment from the config */
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 15px;
+    min-width: 32px;
+    padding: 0;
+    margin: 0;
+}
+
+#custom-arch {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 20px;
+    min-width: 36px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Rounder containers */
+#audio, #connection, #ram, #keyboard, #time {
+    border-radius: 9px;
+}
+
+#custom-cava {
+    border-radius: 8px;
+}
+
+#navigation {
+    border-radius: 8px;
+}
+
+#custom-arch {
+    border-radius: 6px 0 0 6px;
+}
+
+#workspaces {
+    border-radius: 0 6px 6px 0;
+}
+
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    min-width: 32px;
+    padding: 0;
+    margin: 0;
+    font-size: 1px;
+    border-radius: 7px 0 0 7px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
+}
+
+#custom-audio-icon { background-image: url("file:///home/xylvzm/.config/waybar/icons/audio.svg"); }
+
+#custom-network-icon { background-image: url("file:///home/xylvzm/.config/waybar/icons/network.svg"); }
+
+#custom-memory-icon { background-image: url("file:///home/xylvzm/.config/waybar/icons/memory.svg"); }
+
+#custom-language-icon { background-image: url("file:///home/xylvzm/.config/waybar/icons/language.svg"); }
+
+#custom-clock-icon { background-image: url("file:///home/xylvzm/.config/waybar/icons/clock.svg"); }
+
+/* One rounded frame per status module */
+#audio, #connection, #ram, #keyboard, #time {
+    border: none;
+    padding: 2px;
+    border-radius: 9px;
+}
+
+#audio      { background-color: @orange; }
+#connection { background-color: @lightgreen; }
+#ram        { background-color: @pink; }
+#keyboard   { background-color: @blue; }
+#time       { background-color: @yellow; }
+
+/* Parent supplies the colored icon background.
+   Keep the existing centered SVG images. */
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+/* Black value area fits inside the rounded frame */
+#pulseaudio,
+#network,
+#memory,
+#language,
+#clock {
+    background-color: @bg;
+    border: none;
+    border-radius: 0 7px 7px 0;
+    margin: 0;
+    padding: 0 8px;
+}
+
+/* Single fitted frame for Arch + workspaces */
+#navigation {
+    background-color: @teal;
+    border: none;
+    padding: 2px;
+    border-radius: 8px;
+}
+
+#custom-arch {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces {
+    background-color: @bg;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* More breathing room inside the bar */
+.modules-left,
+.modules-right {
+    margin: 6px 8px;
+}
+
+.modules-center {
+    margin: 6px 0;
+}
+
+/* Reduce the tallest elements */
+#custom-arch {
+    font-size: 16px;
+}
+
+#custom-cava {
+    font-size: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#custom-audio-icon,
+#custom-network-icon,
+#custom-memory-icon,
+#custom-language-icon,
+#custom-clock-icon {
+    background-size: 14px 14px;
+}
+
+/* More space before Arch + workspaces */
+.modules-left { margin-left: 16px; }
+
+/* Full-height, square workspace selection */
+#workspaces {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#workspaces button {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+#workspaces button.active,
+#workspaces button.active:hover {
+    background-color: #508780;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #000200;
+}

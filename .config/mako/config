@@ -1,0 +1,30 @@
+font=JetBrainsMono Nerd Font 11
+background-color=#000200
+text-color=#e9d9b6
+border-color=#ba9f64
+border-size=2
+border-radius=8
+
+width=340
+height=160
+padding=12
+margin=8,16
+anchor=top-right
+layer=overlay
+
+icons=1
+max-icon-size=64
+markup=1
+format=<b>%s</b>\n%b
+default-timeout=6000
+
+[urgency=low]
+border-color=#508780
+default-timeout=4000
+
+[urgency=critical]
+border-color=#8c3936
+default-timeout=0
+
+[app-name="Rice Music"]
+format=<span foreground="#6b9e67"><b>%s</b></span>\n%b

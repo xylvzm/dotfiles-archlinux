@@ -1,0 +1,217 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 6,
+  "fixed-center": true,
+  "modules-left": [
+    "group/navigation"
+  ],
+  "modules-center": [
+    "custom/music",
+    "custom/cava"
+  ],
+  "modules-right": [
+    "group/audio",
+    "group/connection",
+    "group/ram",
+    "group/keyboard",
+    "group/time",
+    "custom/power"
+  ],
+  "custom/arch": {
+    "format": "",
+    "on-click": "\"/home/xylvzm/.config/rofi/launch-gruvbox.sh\"",
+    "tooltip-format": "Application launcher",
+    "align": 0.35
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "all-outputs": false,
+    "disable-scroll": true,
+    "on-click": "activate",
+    "persistent-workspaces": {
+      "*": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  "group/tools": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/github",
+      "tray"
+    ]
+  },
+  "custom/github": {
+    "format": "",
+    "on-click": "xdg-open https://github.com",
+    "tooltip-format": "GitHub"
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 6
+  },
+  "mpris": {
+    "format": " {title}",
+    "format-paused": " {title}",
+    "max-length": 20,
+    "tooltip-format": "{artist} — {title}",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next"
+  },
+  "cava": {
+    "cava_config": "~/.config/waybar/cava.ini",
+    "bars": 42,
+    "framerate": 25,
+    "autosens": 1,
+    "sleep_timer": 5,
+    "hide_on_silence": false,
+    "format_silent": "▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁",
+    "input_delay": 3,
+    "format-icons": [
+      "▁",
+      "▂",
+      "▃",
+      "▄",
+      "▅",
+      "▆",
+      "▇",
+      "█"
+    ]
+  },
+  "pulseaudio": {
+    "format": "{volume}%",
+    "format-muted": "mute",
+    "scroll-step": 2,
+    "on-click": "python3 /home/xylvzm/.config/eww/scripts/volume.py toggle",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip-format": "{desc}"
+  },
+  "network": {
+    "format-wifi": "connected",
+    "format-ethernet": "wired",
+    "format-disconnected": "offline",
+    "tooltip-format-wifi": "{essid} · {signalStrength}%\n{ipaddr}",
+    "tooltip-format-ethernet": "{ifname} · {ipaddr}",
+    "interval": 5,
+    "on-click": "python3 /home/xylvzm/.config/eww/scripts/connectivity.py toggle wifi",
+    "on-click-right": "python3 /home/xylvzm/.config/eww/scripts/connectivity.py toggle bluetooth"
+  },
+  "memory": {
+    "format": "{percentage}%",
+    "interval": 5,
+    "tooltip-format": "{used:0.1f} / {total:0.1f} GiB"
+  },
+  "hyprland/language": {
+    "format": "{short}",
+    "tooltip": false
+  },
+  "clock": {
+    "format": "{:%I:%M%p}",
+    "tooltip-format": "{:%A, %B %d, %Y}\n\n{calendar}",
+    "calendar": {
+      "mode": "month"
+    },
+    "on-click": "python3 \"/home/xylvzm/.config/eww/scripts/toggle.py\" calendar",
+    "tooltip": false
+  },
+  "custom/power": {
+    "format": "",
+    "tooltip-format": "Session / power menu",
+    "on-click": "python3 \"$HOME/.config/eww/scripts/power-toggle.py\""
+  },
+  "custom/music": {
+    "exec": "python3 \"$HOME/.config/waybar/scripts/music.py\"",
+    "return-type": "json",
+    "interval": 2,
+    "escape": true,
+    "on-click": "python3 \"/home/xylvzm/.config/eww/scripts/toggle.py\" music",
+    "on-click-right": "playerctl next"
+  },
+  "custom/cava": {
+    "exec": "python3 \"$HOME/.config/waybar/scripts/spectrum.py\"",
+    "return-type": "json",
+    "restart-interval": 3,
+    "escape": true
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/audio-icon",
+      "pulseaudio"
+    ]
+  },
+  "custom/audio-icon": {
+    "format": " ",
+    "tooltip": false,
+    "on-click": "python3 /home/xylvzm/.config/eww/scripts/volume.py toggle",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "align": 0.5
+  },
+  "group/connection": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/network-icon",
+      "network"
+    ]
+  },
+  "custom/network-icon": {
+    "format": " ",
+    "tooltip": false,
+    "align": 0.5,
+    "on-click": "python3 /home/xylvzm/.config/eww/scripts/connectivity.py toggle wifi",
+    "on-click-right": "python3 /home/xylvzm/.config/eww/scripts/connectivity.py toggle bluetooth"
+  },
+  "group/ram": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/memory-icon",
+      "memory"
+    ]
+  },
+  "custom/memory-icon": {
+    "format": " ",
+    "tooltip": false,
+    "align": 0.5
+  },
+  "group/keyboard": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/language-icon",
+      "hyprland/language"
+    ]
+  },
+  "custom/language-icon": {
+    "format": " ",
+    "tooltip": false,
+    "align": 0.5
+  },
+  "group/time": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/clock-icon",
+      "clock"
+    ]
+  },
+  "custom/clock-icon": {
+    "format": " ",
+    "tooltip": false,
+    "align": 0.5,
+    "on-click": "python3 \"/home/xylvzm/.config/eww/scripts/toggle.py\" calendar"
+  },
+  "group/navigation": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/arch",
+      "hyprland/workspaces"
+    ]
+  }
+}

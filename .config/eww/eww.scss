@@ -1,0 +1,170 @@
+$bg: #000200;
+$fg: #e9d9b6;
+$red: #8c3936;
+$khaki: #ba9f64;
+$pink: #a86585;
+$olive: #b1b91b;
+$teal: #508780;
+
+* { all: unset; font-family: "JetBrainsMono Nerd Font", monospace; font-size: 12px; }
+window { background-color: transparent; color: $fg; }
+.music-frame, .calendar-frame {
+    background-image: linear-gradient(to right, $red, $khaki);
+    padding: 2px;
+    border-radius: 5px;
+}
+.music-body {
+    background-color: $bg;
+    padding: 8px;
+    border-radius: 3px;
+}
+.album-card {
+    min-width: 300px;
+    min-height: 148px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background-color: #18251a;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.small-controls button { color: $fg; font-size: 13px; padding: 0 1px; }
+.small-controls button:hover { color: $olive; }
+.track { color: $fg; font-size: 14px; font-weight: bold; font-style: italic; margin-top: 6px; }
+.artist { color: $fg; font-size: 12px; }
+.track-time { color: $fg; font-size: 10px; font-style: italic; margin-top: 3px; }
+.side-controls button { color: $fg; font-size: 17px; padding: 2px; }
+.side-controls button:hover { color: $olive; }
+.side-controls .close-music { color: #c33c2e; font-size: 18px; }
+progressbar trough { min-height: 4px; border-radius: 3px; background-color: rgba(233,217,182,0.35); }
+progressbar progress { min-height: 4px; border-radius: 3px; background-color: $olive; }
+.calendar-body { background-color: $bg; border-radius: 3px; padding: 16px 12px 12px; }
+.clock-number { color: $fg; font-weight: bold; font-size: 27px; }
+.clock-divider { min-width: 2px; background-image: linear-gradient(to bottom, $red, $teal); margin: 0 4px; }
+.calendar-date { color: $fg; font-size: 11px; margin-bottom: 4px; }
+.calendar-inset { background-color: #252525; border-radius: 9px; padding: 10px 6px; }
+calendar { color: $fg; padding: 3px; }
+calendar.header { color: $pink; }
+calendar.button { color: $fg; }
+calendar.highlight { color: $olive; }
+calendar:indeterminate { color: #a83630; }
+calendar:selected { color: $pink; background-color: transparent; font-weight: bold; }
+
+/* Scoped power menu; existing widgets are untouched. */
+.power-frame {
+    background-image: linear-gradient(to right, #8c3936, #ba9f64);
+    border-radius: 5px;
+    padding: 2px;
+}
+.power-body { background-color: #000200; border-radius: 3px; padding: 14px; }
+.power-heading { color: #ba9f64; font-size: 12px; font-weight: bold; }
+.power-close { color: #e9d9b6; font-size: 18px; padding: 0 4px; }
+.power-tile { background-color: #20221e; border-radius: 8px; padding: 12px 8px; color: #e9d9b6; }
+.power-tile label { font-size: 12px; }
+.power-tile:hover { background-color: #30352d; }
+.power-tile.chosen { background-color: #30352d; box-shadow: inset 0 0 0 1px #ba9f64; }
+.power-tile.sleep label { color: #85a699; }
+.power-tile.logout label { color: #a86585; }
+.power-tile.restart label { color: #ba9f64; }
+.power-tile.shutdown label { color: #c46b62; }
+.power-confirmation { padding-top: 6px; }
+.power-prompt { color: #e9d9b6; font-weight: bold; }
+.power-warning { color: #ba9f64; font-size: 10px; }
+.power-cancel, .power-confirm { padding: 8px; border-radius: 6px; }
+.power-cancel { background-color: #252525; color: #e9d9b6; }
+.power-confirm { background-color: #8c3936; color: #e9d9b6; }
+.power-cancel:hover { background-color: #383838; }
+.power-confirm:hover { background-color: #a64a45; }
+
+/* rice-connectivity-start */
+.radio-frame {
+  background-image: linear-gradient(45deg, #8c3936, #ba9f64);
+  border-radius: 9px;
+  padding: 2px;
+}
+.radio-body {
+  background-color: #000200;
+  color: #e9d9b6;
+  border-radius: 7px;
+  padding: 14px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 12px;
+}
+.radio-heading { color: #ba9f64; font-size: 14px; font-weight: bold; }
+.radio-close { color: #e9d9b6; min-width: 28px; min-height: 28px; font-size: 20px; }
+.radio-tab, .radio-control, .radio-advanced {
+  background-color: #141810;
+  color: #e9d9b6;
+  border: 1px solid #508780;
+  border-radius: 7px;
+  padding: 8px 10px;
+  min-height: 18px;
+}
+.radio-tab.selected { background-color: #508780; color: #000200; font-weight: bold; }
+.radio-tab:hover, .radio-control:hover, .radio-advanced:hover { border-color: #ba9f64; }
+.radio-status { color: #a1ba97; }
+.radio-network {
+  background-color: #10140e;
+  color: #e9d9b6;
+  border: 1px solid #333c2e;
+  border-radius: 7px;
+  padding: 10px;
+}
+.radio-network.connected { border-color: #6b9e67; }
+.radio-network:hover { background-color: #1c2419; border-color: #ba9f64; }
+.radio-name { color: #e9d9b6; font-size: 13px; }
+.radio-signal { color: #a1ba97; }
+.radio-detail, .radio-note { color: #85a699; font-size: 11px; }
+.radio-advanced { color: #ba9f64; }
+.radio-body scrollbar { background: transparent; min-width: 4px; }
+.radio-body scrollbar slider { background-color: #508780; border-radius: 3px; min-height: 24px; }
+/* rice-connectivity-end */
+
+/* rice-volume-start */
+.vol-frame {
+  background: linear-gradient(45deg, #8c3936, #ba9f64);
+  border-radius: 9px;
+  padding: 2px;
+}
+.vol-body {
+  background: #000200;
+  color: #e9d9b6;
+  border-radius: 7px;
+  padding: 16px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+}
+.vol-heading { color: #ba9f64; font-size: 15px; font-weight: bold; }
+.vol-section { color: #a1ba97; font-size: 12px; font-weight: bold; }
+.vol-value { color: #e9d9b6; }
+.vol-detail { color: #85a699; font-size: 11px; }
+.vol-note { color: #ba9f64; font-size: 11px; }
+.vol-close, .vol-control, .vol-device {
+  background: #10140e;
+  background-image: none;
+  color: #e9d9b6;
+  border: 1px solid #508780;
+  border-radius: 7px;
+  padding: 8px 12px;
+  box-shadow: none;
+  text-shadow: none;
+}
+.vol-close { color: #ba9f64; padding: 2px 10px; }
+.vol-control:hover, .vol-device:hover, .vol-close:hover { border-color: #ba9f64; background: #20261b; }
+.vol-control:disabled { color: #85a699; border-color: #333c2e; }
+.vol-selected { border-color: #6b9e67; background: #162015; }
+.vol-slider { padding: 8px 0; }
+.vol-slider trough { background: #30382b; min-height: 8px; border-radius: 6px; }
+.vol-slider highlight { background: #edbb26; border-radius: 6px; }
+.vol-slider slider {
+  background: #e9d9b6;
+  background-image: none;
+  border: none;
+  border-radius: 8px;
+  min-width: 16px;
+  min-height: 16px;
+  box-shadow: none;
+}
+.vol-mic highlight { background: #6b9e67; }
+.vol-body scrollbar slider { background: #508780; border-radius: 6px; min-width: 4px; }
+/* rice-volume-end */

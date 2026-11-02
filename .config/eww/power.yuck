@@ -1,0 +1,44 @@
+(defvar power_choice "")
+
+(defwidget power-panel []
+  (box :class "power-frame" :orientation "v"
+    (box :class "power-body" :orientation "v" :space-evenly false :spacing 12
+      (box :class "power-heading" :space-evenly false
+        (label :text "SESSION" :hexpand true :xalign 0)
+        (button :class "power-close" :tooltip "Close" :onclick "eww close power" "×"))
+      (box :orientation "v" :space-evenly false :spacing 8
+        (box :space-evenly true :spacing 8
+          (button :class {power_choice == "suspend" ? "power-tile sleep chosen" : "power-tile sleep"}
+            :onclick "eww update power_choice=suspend"
+            (box :orientation "v" :spacing 8
+              (image :path "assets/power-suspend.svg" :image-width 23 :image-height 23)
+              (label :text "Suspend")))
+          (button :class {power_choice == "logout" ? "power-tile logout chosen" : "power-tile logout"}
+            :onclick "eww update power_choice=logout"
+            (box :orientation "v" :spacing 8
+              (image :path "assets/power-logout.svg" :image-width 23 :image-height 23)
+              (label :text "Log out"))))
+        (box :space-evenly true :spacing 8
+          (button :class {power_choice == "reboot" ? "power-tile restart chosen" : "power-tile restart"}
+            :onclick "eww update power_choice=reboot"
+            (box :orientation "v" :spacing 8
+              (image :path "assets/power-reboot.svg" :image-width 23 :image-height 23)
+              (label :text "Restart")))
+          (button :class {power_choice == "shutdown" ? "power-tile shutdown chosen" : "power-tile shutdown"}
+            :onclick "eww update power_choice=shutdown"
+            (box :orientation "v" :spacing 8
+              (image :path "assets/power-shutdown.svg" :image-width 23 :image-height 23)
+              (label :text "Shut down")))))
+      (revealer :reveal {power_choice != ""} :transition "slidedown" :duration "150ms"
+        (box :class "power-confirmation" :orientation "v" :space-evenly false :spacing 10
+          (label :class "power-prompt" :text "Confirm ${power_choice}?")
+          (label :class "power-warning" :text "Save your work before continuing.")
+          (box :space-evenly true :spacing 8
+            (button :class "power-cancel" :onclick "eww update power_choice=''" "Cancel")
+            (button :class "power-confirm" :onclick "python3 ~/.config/eww/scripts/power-action.py ${power_choice}" "Confirm")))))))
+
+(defwindow power
+  :geometry (geometry :x "16px" :y "8px" :width "300px" :height "240px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  (power-panel))

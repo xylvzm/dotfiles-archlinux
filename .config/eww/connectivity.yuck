@@ -1,0 +1,62 @@
+(defvar radio_open false)
+(defvar radio_tab "wifi")
+(defpoll radio_state :interval "5s" :run-while radio_open
+  :initial '{"message":"","wifi":{"available":false,"enabled":false,"status":"Loading Wi-Fi…","networks":[]},"bt":{"available":false,"enabled":false,"status":"Loading Bluetooth…","devices":[]}}'
+  "python3 ~/.config/eww/scripts/connectivity.py state")
+
+(defwidget connectivity-panel []
+  (box :class "radio-frame" :orientation "v"
+    (box :class "radio-body" :orientation "v" :space-evenly false :spacing 12
+      (box :class "radio-header" :space-evenly false :spacing 12
+        (label :class "radio-heading" :text "CONNECTIONS" :xalign 0 :hexpand true)
+        (button :class "radio-close" :onclick "python3 ~/.config/eww/scripts/connectivity.py close" "×"))
+      (box :class "radio-tabs" :space-evenly true :spacing 8
+        (button :class {radio_tab == "wifi" ? "radio-tab selected" : "radio-tab"}
+          :onclick "eww update radio_tab=wifi" "Wi-Fi")
+        (button :class {radio_tab == "bluetooth" ? "radio-tab selected" : "radio-tab"}
+          :onclick "eww update radio_tab=bluetooth" "Bluetooth"))
+      (box :visible {radio_tab == "wifi"} :orientation "v" :space-evenly false :spacing 12
+        (box :space-evenly false :spacing 8
+          (label :class "radio-status" :text {radio_state.wifi.status} :limit-width 27 :xalign 0 :hexpand true)
+          (button :class "radio-control" :onclick {radio_state.wifi.enabled ? "python3 ~/.config/eww/scripts/connectivity.py wifi-off" : "python3 ~/.config/eww/scripts/connectivity.py wifi-on"}
+            {radio_state.wifi.enabled ? "Turn off" : "Turn on"}))
+        (box :space-evenly true :spacing 8
+          (button :class "radio-control" :onclick "python3 ~/.config/eww/scripts/connectivity.py wifi-scan" "Scan")
+          (button :class "radio-control" :onclick "python3 ~/.config/eww/scripts/connectivity.py wifi-disconnect" "Disconnect"))
+        (scroll :height 260 :vscroll true :hscroll false
+          (box :orientation "v" :space-evenly false :spacing 8
+            (for network in {radio_state.wifi.networks}
+              (button :class {network.connected ? "radio-network connected" : "radio-network"}
+                :tooltip {network.name}
+                :onclick "python3 ~/.config/eww/scripts/connectivity.py wifi-connect ${network.id}"
+                (box :orientation "v" :space-evenly false :spacing 5
+                  (box :space-evenly false :spacing 8
+                    (label :class "radio-name" :text {network.name} :limit-width 27 :xalign 0 :hexpand true)
+                    (label :class "radio-signal" :text "${network.signal}%"))
+                  (label :class "radio-detail" :text {network.detail} :xalign 0))))))
+        (button :class "radio-advanced" :onclick "python3 ~/.config/eww/scripts/connectivity.py advanced" "Advanced network settings"))
+      (box :visible {radio_tab == "bluetooth"} :orientation "v" :space-evenly false :spacing 12
+        (box :space-evenly false :spacing 8
+          (label :class "radio-status" :text {radio_state.bt.status} :limit-width 27 :xalign 0 :hexpand true)
+          (button :class "radio-control" :onclick {radio_state.bt.enabled ? "python3 ~/.config/eww/scripts/connectivity.py bt-off" : "python3 ~/.config/eww/scripts/connectivity.py bt-on"}
+            {radio_state.bt.enabled ? "Turn off" : "Turn on"}))
+        (button :class "radio-control" :onclick "python3 ~/.config/eww/scripts/connectivity.py bt-scan" "Scan for devices · 8 seconds")
+        (scroll :height 260 :vscroll true :hscroll false
+          (box :orientation "v" :space-evenly false :spacing 8
+            (for device in {radio_state.bt.devices}
+              (button :class {device.connected ? "radio-network connected" : "radio-network"}
+                :tooltip {device.name}
+                :onclick "python3 ~/.config/eww/scripts/connectivity.py bt-device ${device.id}"
+                (box :orientation "v" :space-evenly false :spacing 5
+                  (box :space-evenly false :spacing 8
+                    (label :class "radio-name" :text {device.name} :limit-width 27 :xalign 0 :hexpand true)
+                    (label :class "radio-signal" :text {device.action}))
+                  (label :class "radio-detail" :text {device.detail} :xalign 0))))))
+        (label :class "radio-note" :text "Pairing confirmation opens in Kitty."))
+      (label :class "radio-note" :text {radio_state.message} :limit-width 46 :xalign 0))))
+
+(defwindow connectivity
+  :geometry (geometry :x "16px" :y "8px" :width "420px" :height "550px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  (connectivity-panel))

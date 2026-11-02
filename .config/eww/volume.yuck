@@ -1,0 +1,50 @@
+(defvar volume_open false)
+(defpoll volume_state :interval "1s" :run-while volume_open
+  :initial '{"output":{"label":"Loading…","volume":0,"slider":0,"muted":false,"available":false},"mic":{"label":"Loading…","volume":0,"slider":0,"muted":false,"available":false},"outputs":[],"message":""}'
+  "python3 ~/.config/eww/scripts/volume.py state")
+
+(defwidget rice-volume-panel []
+  (box :class "vol-frame"
+    (box :class "vol-body" :orientation "v" :space-evenly false :spacing 16
+      (box :space-evenly false
+        (label :class "vol-heading" :text "SOUND" :halign "start" :hexpand true)
+        (button :class "vol-close" :onclick "python3 ~/.config/eww/scripts/volume.py close" "×"))
+      (box :orientation "v" :space-evenly false :spacing 8
+        (box :space-evenly false
+          (label :class "vol-section" :text "OUTPUT" :halign "start" :hexpand true)
+          (label :class "vol-value" :text {volume_state.output.muted ? "Muted" : "${volume_state.output.volume}%"}))
+        (label :class "vol-detail" :halign "start" :limit-width 38 :text {volume_state.output.label})
+        (scale :class "vol-slider" :orientation "h" :hexpand true :min 0 :max 100
+          :sensitive {volume_state.output.available} :value {volume_state.output.slider}
+          :onchange "python3 ~/.config/eww/scripts/volume.py output-volume {}")
+        (button :class "vol-control" :sensitive {volume_state.output.available}
+          :onclick "python3 ~/.config/eww/scripts/volume.py output-mute"
+          (label :text {volume_state.output.muted ? "Unmute output" : "Mute output"})))
+      (box :orientation "v" :space-evenly false :spacing 8
+        (box :space-evenly false
+          (label :class "vol-section" :text "MICROPHONE" :halign "start" :hexpand true)
+          (label :class "vol-value" :text {volume_state.mic.muted ? "Muted" : "${volume_state.mic.volume}%"}))
+        (label :class "vol-detail" :halign "start" :limit-width 38 :text {volume_state.mic.label})
+        (scale :class "vol-slider vol-mic" :orientation "h" :hexpand true :min 0 :max 100
+          :sensitive {volume_state.mic.available} :value {volume_state.mic.slider}
+          :onchange "python3 ~/.config/eww/scripts/volume.py mic-volume {}")
+        (button :class "vol-control" :sensitive {volume_state.mic.available}
+          :onclick "python3 ~/.config/eww/scripts/volume.py mic-mute"
+          (label :text {volume_state.mic.muted ? "Unmute microphone" : "Mute microphone"})))
+      (label :class "vol-section" :text "PLAY THROUGH" :halign "start")
+      (scroll :height 116 :hscroll false :vscroll true
+        (box :orientation "v" :space-evenly false :spacing 8
+          (for device in {volume_state.outputs}
+            (button :class {device.selected ? "vol-device vol-selected" : "vol-device"}
+              :onclick "python3 ~/.config/eww/scripts/volume.py select-output ${device.id}"
+              (box :space-evenly false :spacing 12
+                (label :text {device.label} :limit-width 32 :halign "start" :hexpand true)
+                (label :text {device.selected ? "Active" : "Use"}))))))
+      (label :class "vol-note" :text "Sliders are limited to 100%." :halign "start")
+      (label :class "vol-detail" :text {volume_state.message} :wrap true :limit-width 42 :halign "start"))))
+
+(defwindow volume-panel
+  :geometry (geometry :x "16px" :y "8px" :width "420px" :height "520px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  (rice-volume-panel))

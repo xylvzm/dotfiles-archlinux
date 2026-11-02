@@ -1,0 +1,53 @@
+(deflisten media :initial '{"title":"No media playing","artist":"Open a music player","playing":false,"progress":0,"elapsed":"0:00","duration":"0:00","cover_style":""}'
+  "python3 ~/.config/eww/scripts/media.py")
+(defpoll clock_hour :interval "5s" "date '+%I'")
+(defpoll clock_minute :interval "5s" "date '+%M'")
+(defpoll current_date :interval "30s" "date '+%A, %d %B'")
+
+(defwidget music-panel []
+  (box :class "music-frame" :orientation "v"
+    (box :class "music-body" :orientation "h" :space-evenly false :spacing 6
+      (box :class "album-card" :style {media.cover_style}
+           :orientation "v" :space-evenly false :hexpand true :spacing 4
+        (box :class "small-controls" :space-evenly false :spacing 8 :halign "start"
+          (button :tooltip "Shuffle" :onclick "python3 ~/.config/eww/scripts/playback.py shuffle" "󰒟")
+          (button :tooltip "Repeat" :onclick "python3 ~/.config/eww/scripts/playback.py repeat" "󰑖"))
+        (label :class "track" :text {media.title} :limit-width 28 :xalign 0)
+        (label :class "artist" :text {media.artist} :limit-width 30 :xalign 0)
+        (box :vexpand true)
+        (progress :class "music-progress" :value {media.progress})
+        (label :class "track-time" :text "${media.elapsed} / ${media.duration}" :xalign 0))
+      (box :class "side-controls" :orientation "v" :space-evenly true :width 30
+        (button :tooltip "Previous" :onclick "playerctl previous" "󰒮")
+        (button :tooltip "Play / pause" :onclick "playerctl play-pause" {media.playing ? "" : ""})
+        (button :tooltip "Next" :onclick "playerctl next" "󰒭")
+        (button :class "close-music" :tooltip "Close widget" :onclick "eww close music" "⊗")))))
+
+(defwidget calendar-panel []
+  (box :class "calendar-frame" :orientation "v"
+    (box :class "calendar-body" :orientation "v" :space-evenly false :spacing 12
+      (box :class "split-clock" :orientation "h" :space-evenly false :height 82
+        (label :class "clock-number" :text clock_hour :hexpand true)
+        (box :class "clock-divider" :width 2)
+        (label :class "clock-number" :text clock_minute :hexpand true))
+      (label :class "calendar-date" :text current_date)
+      (box :class "calendar-inset" :orientation "v"
+        (calendar :class "month" :show-heading true :show-day-names true :show-week-numbers false)))))
+
+(defwindow music
+  :geometry (geometry :x "0px" :y "8px" :width "390px" :height "190px" :anchor "top center")
+  :stacking "overlay"
+  :exclusive false
+  (music-panel))
+
+(defwindow calendar
+  :geometry (geometry :x "24px" :y "8px" :width "280px" :height "380px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  (calendar-panel))
+
+(include "power.yuck")
+
+(include "connectivity.yuck")
+
+(include "volume.yuck")
