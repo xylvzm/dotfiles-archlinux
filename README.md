@@ -1,2 +1,1 @@
-# dotfiles-archlinux
-gruvbox - hyprland
+
